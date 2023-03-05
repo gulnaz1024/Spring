@@ -14,13 +14,6 @@ public class Book {
     private String title;
     private String isbn;
 
-    private int published_year;
-
-    @ManyToMany
-    private Set<Author> authors;
-
-    @ManyToOne
-    private Publisher publisher;
 
     public Book() {
     }
@@ -77,11 +70,5 @@ public class Book {
                 '}';
     }
 
-    public Book addAuthor(Author author) {
-        if (authors == null)
-            authors = new HashSet<>();
 
-        authors.add(author);
-        return this;
-    }
 }

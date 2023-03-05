@@ -1,10 +1,12 @@
 package kg.edu.alatoo.springWeb.controllers;
 
+import jakarta.validation.Valid;
 import kg.edu.alatoo.springWeb.modules.Book;
 import kg.edu.alatoo.springWeb.repos.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 // Controller + ResponseBody = RestController
@@ -14,16 +16,64 @@ public class MainController {
     @Autowired
     private BookRepository bookRepository;
 
-    @GetMapping({"/","/index"})
-    public String main(Model model) {
 
-        System.out.println(bookRepository.findAll());
-
-        model.addAttribute("word", "Hello World!");
-        model.addAttribute("books", bookRepository.findAll());
-
-        return "main";
+    @GetMapping("/addbook")
+    public String showSignUpForm(Book book) {
+        return "add-book";
     }
+
+    @GetMapping("/index")
+    public String showBookList(Model model) {
+
+        Iterable<Book> books = bookRepository.findAll();
+        for (Book book :
+                books) {
+            book.getTitle();
+        }
+        model.addAttribute("books", books);
+        return "index";
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Book books = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        model.addAttribute("book", books);
+        return "update-book";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id, Model model) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        bookRepository.delete(book);
+        return "redirect:/index";
+    }
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") long id, @Valid Book book,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            book.setId(id);
+            return "update-book";
+        }
+
+        bookRepository.save(book);
+        return "redirect:/index";
+    }
+
+    @PostMapping("/addbook")
+    public String addBook(@Valid Book book, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-book";
+        }
+
+        bookRepository.save(book);
+        return "redirect:/index";
+    }
+
+
 
     @GetMapping("/isbn/{isbn}")
     @ResponseBody
