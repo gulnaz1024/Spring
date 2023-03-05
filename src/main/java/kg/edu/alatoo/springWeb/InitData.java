@@ -21,7 +21,7 @@ public class InitData implements InitializingBean {
     public void afterPropertiesSet() {
 
         List<Book> books = new ArrayList<>();
-        Book sherlok = new Book("Sherlock Holms", "3541354");
+        Book sherlok = new Book("Sherlock Holms","Artur", "Bishkek", "3541354" );
         System.out.println("Before save: " + books);
         bookRepository.saveAll(books);
         System.out.println("After save: "+ books);
