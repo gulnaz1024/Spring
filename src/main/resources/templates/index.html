@@ -5,8 +5,22 @@
   <title>Index page</title>
 </head>
 <body>
+
+<div>Список книг</div>
+<form method="post" action="filter">
+  <input type="text" name="filter">
+  <button type="submit">Найти</button>
+</form>
+
+<div>
+  <b>${book.id}</b>
+  <span>${book.title}</span>
+  <i>${book.isbn}</i>
+</div>
+
+
 <div th:switch="${books}">
-  <h2 th:case="null">No users yet!</h2>
+  <h2 th:case="null">No books yet!</h2>
   <div th:case="*">
     <h2>Books</h2>
     <table>
@@ -26,6 +40,8 @@
       </tbody>
     </table>
   </div>
+
+
   <p><a href="/addbook">Add a new book</a></p>
 </div>
 </body>

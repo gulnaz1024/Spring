@@ -15,6 +15,9 @@ public class Borrower {
     private String email;
     private String phone_number;
 
+    @ManyToMany(mappedBy = "borrowers")
+    private Set<Book> books;
+
 
     public Borrower() {
     }

@@ -18,6 +18,9 @@ public class Book {
     private String publisher;
     private String isbn;
 
+    @ManyToMany
+    private Set<Borrower> borrowers;
+
 
     public Book() {
     }

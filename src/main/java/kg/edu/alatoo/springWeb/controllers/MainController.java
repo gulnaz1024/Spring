@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 // Controller + ResponseBody = RestController
 @Controller
@@ -64,15 +65,33 @@ public class MainController {
     }
 
     @PostMapping("/addbook")
-    public String addBook(@Valid Book book, BindingResult result, Model model) {
+    public String addBook(@Valid Book book, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             return "add-book";
         }
 
         bookRepository.save(book);
+
+        Iterable<Book> books = bookRepository.findAll();
+
+        model.put("books", books);
         return "redirect:/index";
     }
 
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, Map<String, Object> model) {
+        Iterable<Book> books;
+
+        if (filter != null && !filter.isEmpty()) {
+            books = bookRepository.findBookByTitle(filter);
+        } else {
+            books = bookRepository.findAll();
+        }
+
+        model.put("books", books);
+
+        return "redirect:/index";
+    }
 
 
     @GetMapping("/isbn/{isbn}")
