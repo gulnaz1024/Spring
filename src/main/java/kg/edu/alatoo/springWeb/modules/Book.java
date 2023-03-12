@@ -1,6 +1,8 @@
 package kg.edu.alatoo.springWeb.modules;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,6 +13,8 @@ public class Book {
 
     @Id @GeneratedValue
     private long id;
+
+    @NotBlank(message = "It shouldn't be empty")
     private String title;
 
     private String author;

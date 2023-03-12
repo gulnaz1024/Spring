@@ -23,7 +23,7 @@ public class MainController {
         return "add-book";
     }
 
-    @GetMapping("/index")
+    @GetMapping({"/index","/"})
     public String showBookList(Model model) {
 
         Iterable<Book> books = bookRepository.findAll();
@@ -83,14 +83,14 @@ public class MainController {
         Iterable<Book> books;
 
         if (filter != null && !filter.isEmpty()) {
-            books = bookRepository.findBookByTitle(filter);
+            books = bookRepository.findBookByTitleOrAuthorOrIsbn(filter, filter, filter);
         } else {
             books = bookRepository.findAll();
         }
 
         model.put("books", books);
 
-        return "redirect:/index";
+        return "index";
     }
 
 
