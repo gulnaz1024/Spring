@@ -17,12 +17,26 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div>Список книг</div>
-<form method="post" action="filter">
-  <input type="text" name="filter">
-  <button type="submit">Найти</button>
-</form>
+<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+  <h2 class="text-center">Books </h2>
 
+
+<div class="my-3">
+  <form method="post" action="filter">
+    <div class="row d-flex">
+      <div class="col-md-6 mt-2">
+        <div class="search">
+          <input id="keyword" type="search" name="filter" th:value="${filter}" required class="form-control"
+                 placeholder="Enter keyword">
+          <button type="submit" class="btn btn-secondary">Search</button>
+          <button id="btnClear" class="btn btn-info">Clear</button>
+
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
 
 
 

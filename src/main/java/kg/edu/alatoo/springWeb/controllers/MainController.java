@@ -87,12 +87,13 @@ public class MainController {
         return "redirect:/index";
     }
 
-    @PostMapping("filter")
+    @PostMapping("/filter")
     public String filter(@RequestParam("filter") String filter, Map<String, Object> model) {
         Iterable<Book> books;
 
         if (filter != null && !filter.isEmpty()) {
             books = bookRepository.findBookByTitleOrAuthorOrIsbn(filter, filter, filter);
+            model.put("filter", filter);
         } else {
             books = bookRepository.findAll();
         }
