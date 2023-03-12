@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 // Controller + ResponseBody = RestController
 @Controller
 public class MainController {
@@ -46,10 +48,17 @@ public class MainController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
+    public String deleteUser(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        bookRepository.delete(book);
+
+        try {
+            bookRepository.delete(book);
+
+            redirectAttributes.addFlashAttribute("message", "The book with id=" + id + " has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/index";
     }
     @PostMapping("/update/{id}")
@@ -79,7 +88,7 @@ public class MainController {
     }
 
     @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
+    public String filter(@RequestParam("filter") String filter, Map<String, Object> model) {
         Iterable<Book> books;
 
         if (filter != null && !filter.isEmpty()) {
