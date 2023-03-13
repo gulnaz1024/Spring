@@ -23,7 +23,7 @@ public class Book {
     private String isbn;
 
     @Column
-    private boolean given;
+    private boolean given = true;
 
     @ManyToMany
     private Set<Borrower> borrowers;
