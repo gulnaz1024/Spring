@@ -1,19 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Update book</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <title>BezKoder - Spring Boot Thymeleaf example</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<form action="#"
-      th:action="@{/update/{id}(id=${book.getId()})}"
-      th:object="${book}"
-      method="post">
-  <label for="title">Title</label>
-  <input type="text" th:field="${book.title}" id="title" placeholder="Title">
-  <span th:if="${#fields.hasErrors('title')}" th:errors="${book.title}"></span>
-  <input type="submit" value="Update Book">
-</form>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid">
+  <h2 class="text-center">Edit Book</h2>
+
+  <div class="my-3">
+    <form th:action="@{/update/{id}(id=${book.getId()})}" method="post" enctype="multipart/form-data" th:object="${book}"
+          style="max-width: 550px; margin: 0 auto">
+
+      <input type="hidden" th:field="*{id}" />
+
+      <div class="p-3">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="title">Title</label>
+          <div class="col-sm-9">
+            <input type="text" th:field="${book.title}" required minlength="2" maxlength="128" class="form-control"
+                   id="title" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="author">Author</label>
+          <div class="col-sm-9">
+            <input type="text" th:field="${book.author}" minlength="2" maxlength="256" class="form-control"
+                   id="author" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="publisher">Publisher</label>
+          <div class="col-sm-9">
+            <input type="text" th:field="${book.publisher}" minlength="2" maxlength="256" class="form-control"
+                   id="publisher" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 form-check-label" for="isbn">Isbn</label>
+          <div class="col-sm-9">
+            <input type="text" th:field="${book.isbn}" id="isbn" class="form-control" />
+          </div>
+        </div>
+
+        <div class="text-center">
+          <input type="submit" value="Update Book" class="btn btn-primary btn-sm mr-2" />
+          <input type="button" value="Cancel" id="btnCancel" class="btn btn-secondary btn-sm" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#btnCancel").on("click", function () {
+      window.location = "[[@{/edit/{id}(id=${book.id})}]]";
+    });
+  });
+</script>
 
 </body>
 </html>

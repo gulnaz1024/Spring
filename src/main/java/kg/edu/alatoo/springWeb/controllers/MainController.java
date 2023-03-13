@@ -62,7 +62,7 @@ public class MainController {
         return "redirect:/index";
     }
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Valid Book book,
+    public String updateBook(@PathVariable("id") long id, @Valid Book book,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             book.setId(id);
