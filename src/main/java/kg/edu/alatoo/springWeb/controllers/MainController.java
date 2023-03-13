@@ -19,7 +19,10 @@ public class MainController {
     @Autowired
     private BookRepository bookRepository;
 
-
+    @GetMapping("/main")
+    public String showMainPage(Book book) {
+        return "main";
+    }
     @GetMapping("/addbook")
     public String showSignUpForm(Book book) {
         return "add-book";
@@ -75,9 +78,9 @@ public class MainController {
 
     @PostMapping("/addbook")
     public String addBook(@Valid Book book, BindingResult result, Map<String, Object> model) {
-//        if (result.hasErrors()) {
-//            return "add-book";
-//        }
+        if (result.hasErrors()) {
+            return "add-book";
+        }
 
         bookRepository.save(book);
 
@@ -101,6 +104,23 @@ public class MainController {
         model.put("books", books);
 
         return "index";
+    }
+
+    @GetMapping("/index/{id}/given/{status}")
+    public String updateGivenStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean given,
+                                                Model model, RedirectAttributes redirectAttributes) {
+        try {
+            bookRepository.updateGivenStatus(id, given);
+
+            String status = given ? "given" : "disabled";
+            String message = "The Book id=" + id + " has been " + status;
+
+            redirectAttributes.addFlashAttribute("message", message);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+
+        return "redirect:/index";
     }
 
 

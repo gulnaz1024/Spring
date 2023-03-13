@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-  <title>BezKoder - Spring Boot Thymeleaf example</title>
+  <title>Edit Book</title>
 
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -52,6 +52,17 @@
           <label class="col-sm-3 form-check-label" for="isbn">Isbn</label>
           <div class="col-sm-9">
             <input type="text" th:field="${book.isbn}" id="isbn" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 form-check-label" for="given">Status </label>
+          <div class="col-sm-9">
+<!--            <input type="checkbox" th:field="${book.given}" id="given" />-->
+            <select type="checkbox" th:field="${book.given}" id="given">
+              <option value="true">In library</option>
+              <option value="false">Given to reader</option>
+            </select>
           </div>
         </div>
 

@@ -22,6 +22,9 @@ public class Book {
     private String publisher;
     private String isbn;
 
+    @Column
+    private boolean given;
+
     @ManyToMany
     private Set<Borrower> borrowers;
 
@@ -75,6 +78,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public boolean getGiven() {
+        return given;
+    }
+
+    public void setGiven(boolean given) {
+        this.given = given;
     }
 
     @Override
