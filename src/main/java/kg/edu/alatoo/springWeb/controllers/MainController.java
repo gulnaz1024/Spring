@@ -75,9 +75,9 @@ public class MainController {
 
     @PostMapping("/addbook")
     public String addBook(@Valid Book book, BindingResult result, Map<String, Object> model) {
-        if (result.hasErrors()) {
-            return "add-book";
-        }
+//        if (result.hasErrors()) {
+//            return "add-book";
+//        }
 
         bookRepository.save(book);
 
