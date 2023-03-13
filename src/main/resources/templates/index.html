@@ -38,34 +38,65 @@
   </form>
 </div>
 
-
-
-<div th:switch="${books}">
-  <h2 th:case="null">No books yet!</h2>
-  <div th:case="*">
-    <h2>Books</h2>
-    <table>
-      <thead>
+  <div th:if="${books.size() > 0}">
+    <table class="table table-hover table-responsive-xl">
+      <thead class="thead-light">
       <tr>
-        <th>Title</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Publisher</th>
+        <th scope="col">Isbn</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="book : ${books}">
-        <td th:text="${book.title}"></td>
-        <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
-        <td><a th:href="@{/delete/{id}(id=${book.id})}"  th:bookTitle="${book.title}" id="btnDelete"
-               title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete" ></a></td>
+        <th scope="row">[[${book.id}]]</th>
+        <td>[[${book.title}]]</td>
+        <td>[[${book.author}]]</td>
+        <td>[[${book.publisher}]]</td>
+        <td>[[${book.isbn}]]</td>
+        <td>
+          <a th:href="@{/edit/{id}(id=${book.id})}" title="Edit this tutorial"
+             class="fa-regular fa-pen-to-square icon-dark"></a>
+        </td>
+        <td>
+          <a th:href="@{/delete/{id}(id=${book.id})}"  th:bookTitle="${book.title}" id="btnDelete"
+             title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete" ></a>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
 
 
-  <p><a href="/addbook">Add a new book</a></p>
-</div>
+
+<!--<div th:switch="${books}">-->
+<!--  <h2 th:case="null">No books yet!</h2>-->
+<!--  <div th:case="*">-->
+<!--    <h2>Books</h2>-->
+<!--    <table>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Title</th>-->
+<!--        <th>Edit</th>-->
+<!--        <th>Delete</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr th:each="book : ${books}">-->
+<!--        <td th:text="${book.title}"></td>-->
+<!--        <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>-->
+<!--        <td><a th:href="@{/delete/{id}(id=${book.id})}"  th:bookTitle="${book.title}" id="btnDelete"-->
+<!--               title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete" ></a></td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+
+
 
 <div class="modal fade text-center" id="confirmModal">
   <div class="modal-dialog">
