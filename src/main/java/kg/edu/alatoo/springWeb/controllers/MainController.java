@@ -156,16 +156,16 @@ public class MainController {
 
         Set<Borrower> borrower = borrowerRepository.findAll();
 
-        model.addAttribute("bookId", book);
+        model.addAttribute("book", book);
         model.addAttribute("borrowers", borrower);
 
         return "add-borrower";
     }
 
     @PostMapping(value = "/addBookBorrower/{id}")
-    public String addBookBorrower(@PathVariable(value = "id") Long id, @RequestParam long borrowerId, Model model){
+    public String addBookBorrower(@PathVariable(value = "id") Long bookId, @RequestParam long borrowerId, Model model){
 
-        Book book = bookRepository.findBookById(id);
+        Book book = bookRepository.findBookById(bookId);
         Borrower borrower = borrowerRepository.findBorrowerById(borrowerId);
 
         if(book != null)
