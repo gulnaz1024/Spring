@@ -2,13 +2,22 @@ package kg.edu.alatoo.springWeb.controllers;
 
 import jakarta.validation.Valid;
 import kg.edu.alatoo.springWeb.modules.Book;
+import kg.edu.alatoo.springWeb.modules.Borrower;
 import kg.edu.alatoo.springWeb.repos.BookRepository;
+import kg.edu.alatoo.springWeb.repos.BorrowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +28,8 @@ public class MainController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private BorrowerRepository borrowerRepository;
     @GetMapping("/main")
     public String showMainPage(Book book) {
         return "main";
@@ -28,6 +39,7 @@ public class MainController {
         return "add-book";
     }
 
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @GetMapping({"/index","/"})
     public String showBookList(Model model) {
 
@@ -35,9 +47,23 @@ public class MainController {
         for (Book book :
                 books) {
             book.getTitle();
+
         }
         model.addAttribute("books", books);
         return "index";
+    }
+    @GetMapping({"/book-borrower"})
+    public String showBorrowerAndBookList(Model model) {
+
+        List<Book> books = bookRepository.findAll();
+        books = books.stream().filter(b->!b.getBorrowers().isEmpty()).collect(Collectors.toList());
+
+        for (Book book : books) {
+            book.getTitle();
+            book.getBorrowers();
+        }
+        model.addAttribute("books", books);
+        return "book-borrower";
     }
 
 
@@ -121,6 +147,34 @@ public class MainController {
         }
 
         return "redirect:/index";
+    }
+
+    @GetMapping(value = "/addBookBorrower/{id}")
+    public String getBookBorrower(@PathVariable(value = "id") Long id, Model model){
+
+        Book book = bookRepository.findBookById(id);
+
+        Set<Borrower> borrower = borrowerRepository.findAll();
+
+        model.addAttribute("bookId", book);
+        model.addAttribute("borrowers", borrower);
+
+        return "add-borrower";
+    }
+
+    @PostMapping(value = "/addBookBorrower/{id}")
+    public String addBookBorrower(@PathVariable(value = "id") Long id, @RequestParam long borrowerId, Model model){
+
+        Book book = bookRepository.findBookById(id);
+        Borrower borrower = borrowerRepository.findBorrowerById(borrowerId);
+
+        if(book != null)
+        {
+            book.getBorrowers().add(borrower);
+
+        }
+        bookRepository.save(book);
+        return "redirect:/book-borrower";
     }
 
 

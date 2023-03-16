@@ -87,6 +87,14 @@ public class Book {
     public void setGiven(boolean given) {
         this.given = given;
     }
+    public Set<Borrower> getBorrowers() {
+        return borrowers;
+    }
+
+    public void setBorrowers(Set<Borrower> borrowers) {
+        this.borrowers = borrowers;
+    }
+
 
     @Override
     public boolean equals(Object o) {

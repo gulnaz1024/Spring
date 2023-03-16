@@ -10,7 +10,14 @@ import kg.edu.alatoo.springWeb.modules.Book;
 public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findByIsbn(String isbn);
+
+
     List<Book> findBookByTitleOrAuthorOrIsbn(String title, String author, String isbn);
+
+    List<Book> findAll();
+
+    Book findBookById(long id);
+
 
     @Query("UPDATE Book t SET t.given = :given WHERE t.id = :id")
     @Modifying

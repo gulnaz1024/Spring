@@ -8,4 +8,5 @@ import java.util.Set;
 public interface BorrowerRepository extends CrudRepository<Borrower, Long> {
 
     Set<Borrower> findAll();
+    Borrower findBorrowerById(long borrowerId);
 }

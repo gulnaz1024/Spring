@@ -20,7 +20,7 @@
 <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
   <h2 class="text-center">Books </h2>
 
-
+  <div class="container-fluid">
 <div class="my-3">
   <form method="post" action="filter">
     <div class="row d-flex">
@@ -72,7 +72,7 @@
              th:href="@{'/index/' + ${book.id} + '/given/true'}" title="Enable this tutorial">
         </td>
         <td>
-          <a type="button" class="btn btn-outline-primary" th:href="@{/delete/{id}(id=${book.id})}"  th:bookTitle="${book.title}" >Give</a>
+          <a type="button" class="btn btn-outline-primary" th:href="@{/addBookBorrower/{id}(id=${book.id})}"  th:bookTitle="${book.title}" >Give</a>
         </td>
       </tr>
       </tbody>
@@ -100,6 +100,9 @@
     </div>
   </div>
 </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
   $(document).ready(function () {
@@ -120,5 +123,6 @@
     });
   });
 </script>
+
 </body>
 </html>
