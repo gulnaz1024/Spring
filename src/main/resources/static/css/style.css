@@ -40,3 +40,8 @@
     background: grey;
 }
 
+input[type="radio"] {
+    display: inline;
+    width: auto;
+}
+

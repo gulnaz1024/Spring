@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
@@ -14,26 +16,27 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container-fluid">
-    <h2 class="text-center">Add Book to Borrower</h2>
+    <h2 class="text-center">Add Book to Borrower: <span th:text="${book.title}">BookTitle</span></h2>
 
     <div class="my-3">
-        <form th:action="@{/addBookBorrower/{id}(id=${bookId})}" method="post" enctype="multipart/form-data"
+        <form th:action="@{/addBookBorrower/{id}(id=${book.getId()})}" method="post"
               style="max-width: 550px; margin: 0 auto">
 
             <div class="p-3">
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="title">Title</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="title" th:value="${id}" />
-                    </div>
-                </div>
+
 
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="borrower">Borrower</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control"
-                               id="borrower" th:each="borrower : ${borrowers}" th:value="${borrowerId}" />
+                    <div th:unless="${#lists.isEmpty(borrowers)}" class="col-sm-9" th:each="borrower : ${borrowers}">
+                        <input type="radio" class="form-control"
+                               name="borrowerId"
+                               id="borrower" th:id="${#ids.seq('borrower')}"
+                               th:value="${borrower.getId()}" />
+                        <label class="col-sm-3 col-form-label"
+                               for="borrower" th:for="${#ids.prev('borrower')}"
+                               th:text="${borrower.getName()}">Borrower</label>
                     </div>
+
+                    <div th:if="${#lists.isEmpty(borrowers)}">There is no any borrowers please add a borrower first</div>
                 </div>
 
 <!--                <div class="form-group row">-->
