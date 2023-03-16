@@ -20,21 +20,26 @@
 <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
   <h2 class="text-center">Books </h2>
 
-  <div class="container-fluid">
-<div class="my-3">
-  <form method="post" action="filter">
-    <div class="row d-flex">
-      <div class="col-md-6 mt-2">
-        <div class="search">
-          <input id="keyword" type="search" name="filter" th:value="${filter}" required class="form-control"
-                 placeholder="Enter keyword">
-          <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>
-          <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>
+
+  <div class="my-3">
+    <form method="post" action="filter">
+      <div class="row d-flex">
+        <div class="col-md-6 mt-2">
+          <div class="search">
+            <input id="keyword" type="search" name="filter" th:value="${filter}" required class="form-control"
+                   placeholder="Enter keyword">
+<!--            <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>-->
+<!--            <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>-->
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>
+    <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>
+  </div>
 
   <div th:if="${books.size() > 0}">
     <table class="table table-hover table-responsive-xl">
@@ -66,10 +71,10 @@
              title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete" ></a>
         </td>
         <td
-           th:if="${book.given == true}"
-             th:href="@{'/index/' + ${book.id} + '/given/false'}" title="Disable this tutorial"> &#10004; </td>
-          <td th:if="${book.given == false}"
-             th:href="@{'/index/' + ${book.id} + '/given/true'}" title="Enable this tutorial">
+                th:if="${book.given == true}"
+                th:href="@{'/index/' + ${book.id} + '/given/false'}" title="Disable this tutorial"> &#10004; </td>
+        <td th:if="${book.given == false}"
+            th:href="@{'/index/' + ${book.id} + '/given/true'}" title="Enable this tutorial">
         </td>
         <td>
           <a type="button" class="btn btn-outline-primary" th:href="@{/addBookBorrower/{id}(id=${book.id})}"  th:bookTitle="${book.title}" >Give</a>
@@ -79,50 +84,46 @@
     </table>
   </div>
 
-<div class="modal fade text-center" id="confirmModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Confirmation</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+  <div class="modal fade text-center" id="confirmModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-      <div class="modal-body">
-        <span id="confirmText"></span>
-      </div>
+        <div class="modal-body">
+          <span id="confirmText"></span>
+        </div>
 
-      <div class="modal-footer">
-        <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <div class="modal-footer">
+          <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-  </div>
-</div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".btn-delete").on("click", function (e) {
+        e.preventDefault();
+        link = $(this);
 
+        bookTitle = link.attr("bookTitle");
+        $("#yesBtn").attr("href", link.attr("href"));
+        $("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + bookTitle + "\<\/strong\>?");
+        $("#confirmModal").modal();
+      });
 
-<script type="text/javascript">
-  $(document).ready(function () {
-    $(".btn-delete").on("click", function (e) {
-      e.preventDefault();
-      link = $(this);
-
-      bookTitle = link.attr("bookTitle");
-      $("#yesBtn").attr("href", link.attr("href"));
-      $("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + bookTitle + "\<\/strong\>?");
-      $("#confirmModal").modal();
+      $("#btnClear").on("click", function (e) {
+        e.preventDefault();
+        $("#keyword").text("");
+        window.location = "[[@{/index}]]";
+      });
     });
-
-    $("#btnClear").on("click", function (e) {
-      e.preventDefault();
-      $("#keyword").text("");
-      window.location = "[[@{/index}]]";
-    });
-  });
-</script>
-
+  </script>
 </body>
 </html>
