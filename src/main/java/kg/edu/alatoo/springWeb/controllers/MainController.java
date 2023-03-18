@@ -52,6 +52,14 @@ public class MainController {
         model.addAttribute("books", books);
         return "index";
     }
+    @GetMapping({"/borrower-list"})
+    public String showBorrowerList(Model model) {
+        List<Borrower> borrowers = borrowerRepository.findAll();
+        model.addAttribute("borrowers", borrowers);
+        return "borrower-list";
+    }
+
+
     @GetMapping({"/book-borrower"})
     public String showBorrowerAndBookList(Model model) {
 
@@ -150,7 +158,7 @@ public class MainController {
     public String getBookBorrower(@PathVariable(value = "id") Long id, Model model){
 
         Book book = bookRepository.findBookById(id);
-        Set<Borrower> borrower = borrowerRepository.findAll();
+        List<Borrower> borrower = borrowerRepository.findAll();
 
         if(!book.getBorrowers().isEmpty()){
             return "redirect:/index";
