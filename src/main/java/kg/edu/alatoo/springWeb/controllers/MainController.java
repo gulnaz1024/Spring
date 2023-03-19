@@ -172,7 +172,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/index/{id}/given/{status}")
+    /*@GetMapping("/index/{id}/given/{status}")
     public String updateGivenStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean given,
                                                 Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -187,7 +187,7 @@ public class MainController {
         }
 
         return "redirect:/index";
-    }
+    }*/
 
     @GetMapping(value = "/addBookBorrower/{id}")
     public String getBookBorrower(@PathVariable(value = "id") Long id, Model model){

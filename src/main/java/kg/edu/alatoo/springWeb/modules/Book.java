@@ -22,8 +22,8 @@ public class Book {
     private String publisher;
     private String isbn;
 
-    @Column
-    private boolean given = true;
+    /*@Column
+    private boolean given = true;*/
 
     @ManyToMany
     private Set<Borrower> borrowers;
@@ -80,13 +80,13 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public boolean getGiven() {
+    /*public boolean getGiven() {
         return given;
     }
 
     public void setGiven(boolean given) {
         this.given = given;
-    }
+    }*/
     public Set<Borrower> getBorrowers() {
         return borrowers;
     }

@@ -19,7 +19,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     Book findBookById(long id);
 
 
-    @Query("UPDATE Book t SET t.given = :given WHERE t.id = :id")
+    /*@Query("UPDATE Book t SET t.given = :given WHERE t.id = :id")
     @Modifying
-    public void updateGivenStatus(Integer id, boolean given);
+    public void updateGivenStatus(Integer id, boolean given);*/
 }
