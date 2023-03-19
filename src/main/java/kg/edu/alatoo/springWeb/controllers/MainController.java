@@ -64,7 +64,7 @@ public class MainController {
     }
 
 
-    @GetMapping({"/book-borrower"})
+    @GetMapping({"/bookborrower"})
     public String showBorrowerAndBookList(Model model) {
 
         List<Book> books = bookRepository.findAll();
@@ -217,7 +217,7 @@ public class MainController {
 
         }
         bookRepository.save(book);
-        return "redirect:/book-borrower";
+        return "redirect:/index";
     }
 
 
