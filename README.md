@@ -20,7 +20,7 @@ This is web-application for library management. Allows you to:
 </div>
 
 ## 🏃 Getting Started
-Pre requirement:
+Pre-requirements:
 - Spring boot  
 - PostgreSQL Database
 - Maven
@@ -36,7 +36,3 @@ spring.datasource.password= <Your database password here>
 spring.datasource.url= <your databse url here> 
 
 ```
-
-
-
-
