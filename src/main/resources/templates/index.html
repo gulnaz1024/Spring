@@ -28,17 +28,12 @@
           <div class="search">
             <input id="keyword" type="search" name="filter" th:value="${filter}" required class="form-control"
                    placeholder="Enter keyword">
-<!--            <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>-->
-<!--            <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>-->
           </div>
+          <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>
+          <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>
         </div>
       </div>
     </form>
-  </div>
-
-  <div>
-    <button type="submit" class="btn btn-primary mr-1 mt-2">Search</button>
-    <button id="btnClear" class="btn btn-secondary mt-2">Clear</button>
   </div>
 
   <div th:if="${books.size() > 0}">
