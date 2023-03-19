@@ -3,7 +3,7 @@
 **MAT-20**
 
 ## 💬 About
-This web-application for library management. Allows you to:
+This is web-application for library management. Allows you to:
 - Manage the books
 - Manage the borrowers
 
