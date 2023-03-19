@@ -38,6 +38,10 @@ public class MainController {
     public String showSignUpForm(Book book) {
         return "add-book";
     }
+    @GetMapping("/addnewborrower")
+    public String showBorrowerAddForm(Borrower borrower) {
+        return "add-newBorrower";
+    }
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @GetMapping({"/index","/"})
@@ -139,6 +143,17 @@ public class MainController {
         bookRepository.save(book);
 
         return "redirect:/index";
+    }
+
+    @PostMapping("/addnewborrower")
+    public String addNewBorrower(@Valid Borrower borrower, BindingResult result, Map<String, Object> model) {
+        if (result.hasErrors()) {
+            return "add-newBorrower";
+        }
+
+        borrowerRepository.save(borrower);
+
+        return "redirect:/borrower-list";
     }
 
     @PostMapping("/filter")
