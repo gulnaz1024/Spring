@@ -26,6 +26,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone number</th>
+                <th scope="col">Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,10 @@
                 <td>[[${borrower.name}]]</td>
                 <td>[[${borrower.email}]]</td>
                 <td>[[${borrower.phone_number}]]</td>
+                <td>
+                    <a th:href="@{/editBorrower/{id}(id=${borrower.id})}" title="Edit this tutorial"
+                       class="fa-regular fa-pen-to-square icon-dark"></a>
+                </td>
             </tr>
             </tbody>
         </table>

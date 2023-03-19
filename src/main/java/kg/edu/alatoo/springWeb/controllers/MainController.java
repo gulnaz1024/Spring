@@ -84,6 +84,15 @@ public class MainController {
         return "update-book";
     }
 
+    @GetMapping("/editBorrower/{id}")
+    public String showUpdateBorrowerForm(@PathVariable("id") long id, Model model) {
+        Borrower borrowers = borrowerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        model.addAttribute("borrower", borrowers);
+        return "update-borrower";
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
         Book book = bookRepository.findById(id)
@@ -108,6 +117,17 @@ public class MainController {
 
         bookRepository.save(book);
         return "redirect:/index";
+    }
+    @PostMapping("/updateBorrower/{id}")
+    public String updateBorrower(@PathVariable("id") long id, @Valid Borrower borrower,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            borrower.setId(id);
+            return "update-borrower";
+        }
+
+        borrowerRepository.save(borrower);
+        return "redirect:/borrower-list";
     }
 
     @PostMapping("/addbook")
