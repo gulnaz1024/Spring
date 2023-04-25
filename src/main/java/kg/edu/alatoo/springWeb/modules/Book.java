@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Builder
+@Component
 public class Book {
 
     @Id @GeneratedValue
