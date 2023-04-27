@@ -18,6 +18,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findBookById(long id);
 
+    Book deleteById(long id);
+
+    Book save(Book book);
 
     /*@Query("UPDATE Book t SET t.given = :given WHERE t.id = :id")
     @Modifying

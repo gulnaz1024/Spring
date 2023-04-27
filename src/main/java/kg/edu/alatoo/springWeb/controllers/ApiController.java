@@ -40,4 +40,19 @@ public class ApiController {
     public Book getBookById(@PathVariable("bookId") long id) {
         return bookService.findById(id);
     }
+
+    @DeleteMapping("{bookId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("bookId") long id) {
+        bookService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @PostMapping
+    public ResponseEntity<?> createBook(@RequestBody Book book) {
+        Book savedBook = bookService.saveBook(book);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Location","/api/v1/book/" + savedBook.getId());
+        return new ResponseEntity<>(responseHeaders,HttpStatus.CREATED);
+    }
 }

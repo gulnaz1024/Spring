@@ -31,8 +31,8 @@ public class BookServicempl implements BookService{
     }
 
     @Override
-    public Book saveBook(Book Book) {
-        return null;
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
@@ -47,6 +47,7 @@ public class BookServicempl implements BookService{
 
     @Override
     public void deleteById(long id) {
+        bookRepository.deleteById(id);
 
     }
 
