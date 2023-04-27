@@ -47,12 +47,17 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
     @PostMapping
     public ResponseEntity<?> createBook(@RequestBody Book book) {
         Book savedBook = bookService.saveBook(book);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Location","/api/v1/book/" + savedBook.getId());
         return new ResponseEntity<>(responseHeaders,HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{bookId}")
+    public ResponseEntity<?> updateBook(@PathVariable("bookId") long id, @RequestBody Book book) {
+        bookService.updateBookById(id,book);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

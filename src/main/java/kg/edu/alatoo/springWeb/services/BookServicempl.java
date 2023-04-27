@@ -3,6 +3,7 @@ package kg.edu.alatoo.springWeb.services;
 import kg.edu.alatoo.springWeb.modules.Book;
 import kg.edu.alatoo.springWeb.repos.BookRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -36,9 +37,15 @@ public class BookServicempl implements BookService{
     }
 
     @Override
-    public void updateBookById(long id, Book Book) {
-
+    public void updateBookById(long id, Book book) {
+        Book existed = bookRepository.findBookById(id);
+        existed.setTitle(book.getTitle());
+        existed.setAuthor(book.getAuthor());
+        existed.setPublisher(book.getPublisher());
+        existed.setIsbn(book.getIsbn());
+        bookRepository.save(existed);
     }
+
 
     @Override
     public Book findById(long id) {
@@ -51,9 +58,24 @@ public class BookServicempl implements BookService{
 
     }
 
-    @Override
-    public void patchBookById(long id, Book Book) {
 
+
+    @Override
+    public void patchBookById(long id, Book book) {
+        Book existed = bookRepository.findBookById(id);
+        if (StringUtils.hasText(book.getTitle())) {
+            existed.setTitle(book.getTitle());
+        }
+        if (StringUtils.hasText(book.getAuthor())) {
+            existed.setAuthor(book.getAuthor());
+        }
+        if (StringUtils.hasText(book.getPublisher())) {
+            existed.setPublisher(book.getPublisher());
+        }
+        if (StringUtils.hasText(book.getIsbn())) {
+            existed.setIsbn(book.getIsbn());
+        }
+        bookRepository.save(existed);
     }
 
 
