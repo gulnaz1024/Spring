@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -59,5 +60,10 @@ public class ApiController {
     public ResponseEntity<?> updateBook(@PathVariable("bookId") long id, @RequestBody Book book) {
         bookService.updateBookById(id,book);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/filter/{filter}")
+    public List<Book> filter(@PathVariable("filter") String filter) {
+        return bookService.findBookByTitleOrAuthorOrIsbn(filter, filter, filter);
     }
 }

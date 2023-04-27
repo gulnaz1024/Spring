@@ -37,6 +37,11 @@ public class BookServicempl implements BookService{
     }
 
     @Override
+    public List<Book> findBookByTitleOrAuthorOrIsbn(String title, String author, String isbn) {
+        return bookRepository.findBookByTitleOrAuthorOrIsbn(title, author, isbn);
+    }
+
+    @Override
     public void updateBookById(long id, Book book) {
         Book existed = bookRepository.findBookById(id);
         existed.setTitle(book.getTitle());

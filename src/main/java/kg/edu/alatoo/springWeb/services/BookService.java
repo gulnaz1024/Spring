@@ -13,6 +13,7 @@ public interface BookService {
     List<Book> findAll();
 
     Book saveBook(Book book);
+    List<Book> findBookByTitleOrAuthorOrIsbn(String title, String author, String isbn);
 
 
     void updateBookById(long id, Book Book);
