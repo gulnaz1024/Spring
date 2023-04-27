@@ -11,5 +11,11 @@ public interface BorrowerRepository extends CrudRepository<Borrower, Long> {
 
 
     List<Borrower> findAll();
+
+
     Borrower findBorrowerById(long borrowerId);
+
+    Borrower deleteById(long borrowerId);
+
+    Borrower save(Borrower borrower);
 }
