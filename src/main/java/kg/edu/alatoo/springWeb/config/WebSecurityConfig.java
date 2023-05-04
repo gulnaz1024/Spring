@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,7 +30,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(req ->
                         req
                                 .requestMatchers("/", "/login","/logout", "/css/**", "/img/**", "/js/**", "/api/v1/**").permitAll()
-                                .requestMatchers("/admin").hasRole("ADMIN")
+                                .requestMatchers("/admin", "/login").hasRole("ADMIN")
+
                                 .anyRequest().authenticated()
                 )
         ;
@@ -41,6 +43,6 @@ public class WebSecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 }
