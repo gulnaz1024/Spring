@@ -1,4 +1,7 @@
 package kg.edu.alatoo.springWeb.repos;
 
-public interface RoleRepository {
+import kg.edu.alatoo.springWeb.modules.Role;
+import org.springframework.data.repository.CrudRepository;
+
+public interface RoleRepository extends CrudRepository<Role, String> {
 }
