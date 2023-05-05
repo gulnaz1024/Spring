@@ -36,3 +36,11 @@ spring.datasource.password= <Your database password here>
 spring.datasource.url= <your databse url here> 
 
 ```
+туториал как добавить фотку
+https://www.codejava.net/frameworks/spring-boot/spring-boot-file-upload-tutorial
+
+туториал по reset password
+https://www.codejava.net/frameworks/spring-boot/spring-security-forgot-password-tutorial
+
+настройка почта gmail для отправки письма:
+https://stackoverflow.com/questions/26594097/javamail-exception-javax-mail-authenticationfailedexception-534-5-7-9-applicatio/72592946#72592946
