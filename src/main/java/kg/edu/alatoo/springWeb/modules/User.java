@@ -19,11 +19,12 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true, nullable = false)
+//    @Column(unique = true, nullable = false)
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();

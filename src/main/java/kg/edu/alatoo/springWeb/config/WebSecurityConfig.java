@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -29,7 +32,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(req ->
                         req
-                                .requestMatchers("/", "/login","/logout", "/css/**", "/img/**", "/js/**", "/api/v1/**", "/error").permitAll()
+                                .requestMatchers("/", "/login","/logout", "/css/**", "/img/**", "/js/**", "/api/v1/**", "/error", "/register/**").permitAll()
                                 .requestMatchers("/admin", "/login").hasRole("ADMIN")
 
                                 .anyRequest().authenticated()
@@ -40,6 +43,12 @@ public class WebSecurityConfig {
         return security.build();
 
     }
+//    UserDetailsService userDetailsService() {
+//        return new InMemoryUserDetailsManager(
+//                User.withDefaultPasswordEncoder()
+//                        .username("user").password("user").roles("USER").build()
+//        );
+//    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
