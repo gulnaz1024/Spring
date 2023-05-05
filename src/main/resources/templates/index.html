@@ -64,6 +64,10 @@
           <a th:href="@{/delete/{id}(id=${book.id})}"  th:bookTitle="${book.title}" id="btnDelete"
              title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete" ></a>
         </td>
+        <td>
+          <img th:src= "@{${book.photosImagePath}}" width="50" height="50" />
+        </td>
+
         <!--<td
                 th:if="${book.given == true}"
                 th:href="@{'/index/' + ${book.id} + '/given/false'}" title="Disable this tutorial"> &#10004; </td>
@@ -73,6 +77,8 @@
         <td>
           <a type="button" class="btn btn-outline-primary" th:href="@{/addBookBorrower/{id}(id=${book.id})}"  th:bookTitle="${book.title}" >Give</a>
         </td>
+
+
       </tr>
       </tbody>
     </table>

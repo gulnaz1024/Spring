@@ -30,12 +30,20 @@ public class Book {
     private String publisher;
     private String isbn;
 
+    @Column(nullable = true, length = 64)
+    private String photos;
     /*@Column
     private boolean given = true;*/
 
     @ManyToMany
     private Set<Borrower> borrowers;
 
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null) return null;
+
+        return "/user-photos/" + id + "/" + photos;
+    }
 
 
 }

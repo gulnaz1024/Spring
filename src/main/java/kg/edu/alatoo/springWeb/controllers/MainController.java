@@ -8,9 +8,11 @@ import kg.edu.alatoo.springWeb.repos.BorrowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +21,10 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 // Controller + ResponseBody = RestController
 @Controller
@@ -134,15 +139,31 @@ public class MainController {
         return "redirect:/borrower-list";
     }
 
+//    @PostMapping("/addbook")
+//    public String addBook(@Valid Book book, BindingResult result, Map<String, Object> model) {
+//        if (result.hasErrors()) {
+//            return "add-book";
+//        }
+//
+//        bookRepository.save(book);
+//
+//        return "redirect:/index";
+//    }
+
     @PostMapping("/addbook")
-    public String addBook(@Valid Book book, BindingResult result, Map<String, Object> model) {
-        if (result.hasErrors()) {
-            return "add-book";
-        }
+    public RedirectView saveUser(Book book,
+                                 @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
-        bookRepository.save(book);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        book.setPhotos(fileName);
 
-        return "redirect:/index";
+        Book savedBook = bookRepository.save(book);
+
+        String uploadDir = "user-photos/" + savedBook.getId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+        return new RedirectView("/index", true);
     }
 
     @PostMapping("/addnewborrower")
@@ -226,5 +247,7 @@ public class MainController {
     public Book getByIsbn(@PathVariable(name = "isbn") String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
+
+
 
 }
