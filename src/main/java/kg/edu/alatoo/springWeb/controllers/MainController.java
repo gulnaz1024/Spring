@@ -83,7 +83,6 @@ public class MainController {
         return "book-borrower";
     }
 
-
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Book books = bookRepository.findById(id)
