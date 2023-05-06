@@ -20,19 +20,22 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity security) throws Throwable {
         security
                 //.csrf().disable()
-                .csrf().ignoringRequestMatchers("/api/**").and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll().and()
+                .csrf().ignoringRequestMatchers("/api/**", "/filter").and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login").permitAll().and()
 
                 .formLogin(login ->
                         login.loginPage("/login")
                                 .permitAll()
                                 .usernameParameter("username")
                                 .passwordParameter("password")
+                                .defaultSuccessUrl("/")
+                                .failureForwardUrl("/error")
+                                .permitAll()
                 )
 
                 .authorizeHttpRequests(req ->
                         req
-                                .requestMatchers("/", "/login","/logout", "/css/**", "/img/**", "/js/**", "/api/v1/**", "/error", "/register/**", "/forgot_password/**", "/reset_password/**").permitAll()
+                                .requestMatchers( "error", "/login","/", "/css/**", "/img/**", "/js/**", "/api/v1/**", "/register/**", "/forgot_password/**", "/reset_password/**", "/webjars/**").permitAll()
                                 .requestMatchers("/admin", "/login").hasRole("ADMIN")
 
                                 .anyRequest().authenticated()
